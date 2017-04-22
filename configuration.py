@@ -1,5 +1,6 @@
 import json
 from userio import *
+import os
 
 twitter_credentials = None
 # Get the twitter login credentials in the form of a dict
@@ -15,11 +16,17 @@ accounts = None
 # Get an array of the user-meaningful handles of the news accounts
 def get_accounts():
     global accounts
-    if accounts = None:
+    if accounts == None:
         with open("config.json") as config:
             json_data = json.load(config)
             accounts = json_data["accounts"]
     return accounts
+
+def is_following(username):
+    for account in get_accounts():
+        if username == account[0] or '@' + username == account[0]:
+            return True
+    return False
 
 default_config = {
     "twitter": {
@@ -33,6 +40,17 @@ default_config = {
         ["@cnnbrk", "CNN"]
     ]
 }
+
+names = None
+def get_name(handle):
+    global names
+    if names is None:
+        names = {}
+        for account in get_accounts():
+            names[account[0]] = account[1]
+            names[account[0][1:]] = account[1]
+            # so that @names defined in config still match
+    return names[handle]
 
 # Generate the default config. Will override existing config.
 def generate_config():

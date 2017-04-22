@@ -1,6 +1,6 @@
 from colorama import Fore, Back, Style
 
-name = "LibreNews"
+name = "LibreNews Server"
 
 prefix = Fore.CYAN + "["+name+"] " + Fore.RESET
 
