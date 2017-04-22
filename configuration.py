@@ -35,7 +35,10 @@ default_config = {
         "access_token": "XXXXX",
         "access_token_secret": "XXXXX"
     },
-    "accounts": ["BBCBreaking", "cnnbrk"]
+    "accounts": [
+        ["@BBCBreaking", "BBC"],
+        ["@cnnbrk", "CNN"]
+    ]
 }
 
 def generate_config():
