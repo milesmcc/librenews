@@ -2,30 +2,35 @@ import json
 import os
 from userio import *
 
-# There is no configuration caching because such a measure
-# would be unnecessary -- it is unlikely that these methods
-# are called very often, and therefore the performance
-# trade-off is minimal. This also allows for configs
-# to be changed in real-time without restarting the
-# program.
-
+database_directory = None
 # Get the directory (with trailing '/') of the database
 def get_database_directory():
-    with open("config.json") as config:
-        json_data = json.load(config)
-        return json_data["database_directory"]
+    global database_directory
+    if database_directory is None:
+        with open("config.json") as config:
+            json_data = json.load(config)
+            database_directory = json_data["database_directory"]
+    return database_directory
 
+twitter_credentials = None
 # Get the twitter login credentials in the form of a dict
 def get_twitter_credentials():
-    with open("config.json") as config:
-        json_data = json.load(config)
-        return json_data["twitter"]
+    global twitter_credentials
+    if twitter_credentials is None:
+        with open("config.json") as config:
+            json_data = json.load(config)
+            twitter_credentials = json_data["twitter"]
+    return twitter_credentials
 
+accounts = None
 # Get an array of the user-meaningful handles of the news accounts
 def get_accounts():
-    with open("config.json") as config:
-        json_data = json.load(config)
-        return json_data["accounts"]
+    global accounts
+    if accounts = None:
+        with open("config.json") as config:
+            json_data = json.load(config)
+            accounts = json_data["accounts"]
+    return accounts
 
 default_config = {
     "database_directory": "database/",
@@ -41,6 +46,7 @@ default_config = {
     ]
 }
 
+# Generate the default config. Will override existing config.
 def generate_config():
     warn("Generating default config...")
     with open("config.json", "w") as config:
