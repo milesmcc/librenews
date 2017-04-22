@@ -1,16 +1,5 @@
 import json
-import os
 from userio import *
-
-database_directory = None
-# Get the directory (with trailing '/') of the database
-def get_database_directory():
-    global database_directory
-    if database_directory is None:
-        with open("config.json") as config:
-            json_data = json.load(config)
-            database_directory = json_data["database_directory"]
-    return database_directory
 
 twitter_credentials = None
 # Get the twitter login credentials in the form of a dict
@@ -33,7 +22,6 @@ def get_accounts():
     return accounts
 
 default_config = {
-    "database_directory": "database/",
     "twitter": {
         "consumer_key": "XXXXX",
         "consumer_secret": "XXXXX",
@@ -56,5 +44,5 @@ def generate_config():
 if not os.path.exists("config.json"):
     warn("No configuration file found!")
     generate_config()
-    say("Please edit the configuration file. LibreNews will now shutdown.")
+    say("Please edit the configuration file. LibreNews Server will now shutdown.")
     SystemExit
