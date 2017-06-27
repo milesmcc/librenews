@@ -33,7 +33,7 @@ application = tornado.web.Application([
     (r"/", IndexHandler),
     (r"/api", ApiHandler),
     (r'/static/(.*)$', tornado.web.StaticFileHandler, {'path': "pages/static"})
-    ], default_handler_class=ErrorHandler)
+    ], default_handler_class=ErrorHandler, debug=True)
 if __name__ == "__main__":
     flashes.load_flashes()
     flashes.start_streamer()
