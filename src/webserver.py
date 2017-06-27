@@ -13,7 +13,11 @@ class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         say("Received INDEX request.")
         flash = flashes.get_latest_flashes(1)[0]
-        time = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
+        time = str(flash['time'])
+        if isinstance(flash['time'], basestring):
+            time = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
+        elif isinstance(flash['time'], datetime.datetime):
+            time = arrow.get(flash['time']).humanize()
         self.render("pages/index.html", flash=flash, time=time)
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
@@ -39,7 +43,7 @@ application = tornado.web.Application([
     ], default_handler_class=ErrorHandler)
 if __name__ == "__main__":
     flashes.load_flashes()
-    flashes.start_streamer()
+    #flashes.start_streamer()
     ok("Starting webserver...")
     application.listen(8888)
     tornado.ioloop.IOLoop.instance().start()
