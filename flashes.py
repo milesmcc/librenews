@@ -7,6 +7,7 @@ from userio import *
 import tweepy
 import tweepy
 import re
+from threading import Thread
 
 latest_flashes = []
 link_regex = re.compile(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»\"\"'']))")
@@ -46,9 +47,10 @@ def load_flashes():
         say("Loading flashes from Twitter account " + accountPair[0] + " (" + accountPair[1] + ")")
         latest_tweets = twitter.get_latest_statuses(accountPair[0][1:])
         for tweet in latest_tweets:
+            print tweet
             url = None
             if "urls" in tweet:
-                url = tweet["urls"][0]
+                url = tweet["urls"][0]['expanded_url']
             push_flash(
                 generate_flash(tweet["text"], url, accountPair[1], tweet["id"], tweet["created_at"])
                 )
@@ -84,8 +86,13 @@ class AccountListener(tweepy.StreamListener):
             return False
         return True
 
+def streamer_entrypoint():
+    twitter_stream = tweepy.Stream(twitter.auth, AccountListener())
+    twitter_stream.filter(follow=[str(twitter.get_id(k[0])) for k in configuration.get_accounts()], async=False)
+
 def start_streamer():
     ok("Starting streamer...")
-    twitter_stream = tweepy.Stream(twitter.auth, AccountListener())
-    twitter_stream.filter(follow=[str(twitter.get_id(k[0])) for k in configuration.get_accounts()], async=True)
+    thread = Thread(target = streamer_entrypoint)
+    thread.setDaemon(True)
+    thread.start()
     ok("Streamer started!")
