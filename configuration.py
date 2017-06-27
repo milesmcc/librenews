@@ -1,6 +1,7 @@
 import json
 from userio import *
 import os
+import sys
 
 twitter_credentials = None
 # Get the twitter login credentials in the form of a dict
@@ -63,4 +64,4 @@ if not os.path.exists("config.json"):
     warn("No configuration file found!")
     generate_config()
     say("Please edit the configuration file. LibreNews Server will now shutdown.")
-    SystemExit
+    sys.exit(1)
