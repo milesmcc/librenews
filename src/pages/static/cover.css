@@ -19,6 +19,25 @@ a:hover {
   border: 1px solid #fff;
 }
 
+.flash {
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+  /*margin: 10px;*/
+  padding-bottom: 0px;
+  /*padding-top: 0px;*/
+}
+
+.Blink {
+    animation: blinker 1s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 
 /*
  * Base structure
@@ -27,7 +46,12 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+  background-color: #002;
+  background-image: url("map_guetzli.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 body {
   color: #fff;

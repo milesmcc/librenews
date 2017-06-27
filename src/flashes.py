@@ -52,7 +52,7 @@ def load_flashes():
             if "entities" in tweet:
                 if "urls" in tweet['entities']:
                     if len(tweet['entities']['urls']) > 0:
-                        url = tweet['entities']["urls"][0]['expanded_url']
+                        url = tweet['entities']["urls"][-1]['expanded_url']
             push_flash(
                 generate_flash(tweet["text"], url, accountPair[1], tweet["id"], tweet["created_at"])
                 )
