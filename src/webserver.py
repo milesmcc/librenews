@@ -43,7 +43,7 @@ application = tornado.web.Application([
     ], default_handler_class=ErrorHandler)
 if __name__ == "__main__":
     flashes.load_flashes()
-    #flashes.start_streamer()
+    flashes.start_streamer()
     ok("Starting webserver...")
     application.listen(8888)
     tornado.ioloop.IOLoop.instance().start()
