@@ -12,9 +12,11 @@ import json
 
 latest_flashes = []
 link_regex = re.compile(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»\"\"'']))")
+rt_regex = re.compile(r"(RT @)\w+(:)")
 
 def generate_flash(text, link, source, identifier, time):
     text = re.sub(link_regex, "", text)
+    text = re.sub(rt_regex, "", text)
     text = text.strip()
     return {
         "text": text,
