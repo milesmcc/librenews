@@ -37,8 +37,7 @@ default_config = {
         "access_token_secret": "XXXXX"
     },
     "accounts": [
-        ["@BBCBreaking", "BBC"],
-        ["@cnnbrk", "CNN"]
+        ["@BBCBreaking", "BBC"]
     ]
 }
 

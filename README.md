@@ -92,9 +92,10 @@ LibreNews will then detect that it has not been set up, and will generate a conf
 
 ![LibreNews-Server detecting it has no config.](images/config.png)
 
-The newly generated config will look like this:
+The newly generated config will look something like this:
 
-```{
+```
+{
     "accounts": [
         [
             "@BBCBreaking",
