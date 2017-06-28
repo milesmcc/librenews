@@ -8,6 +8,12 @@ import arrow
 import datetime
 from userio import *
 
+"""
+You probably don't need to touch this file. Instead, hack away on the
+templates and on `flashes.py`. But keep your hands away from this file
+unless you're absolutely sure!
+"""
+
 class IndexHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
@@ -31,7 +37,7 @@ class ApiHandler(tornado.web.RequestHandler):
             "channels": [k[1] for k in configuration.get_accounts()],
             "latest": flashes.get_latest_flashes(25)
         }
-        self.write(unicode(json.dumps(data, separators=(",", ":"))))
+        self.write(unicode(json.dumps(data, sort_keys=True, indent=4)))
 class ErrorHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
@@ -43,8 +49,7 @@ application = tornado.web.Application([
     (r'/static/(.*)$', tornado.web.StaticFileHandler, {'path': "pages/static"})
     ], default_handler_class=ErrorHandler)
 if __name__ == "__main__":
-    flashes.load_flashes()
-    flashes.start_streamer()
+    flashes.go()
     ok("Starting webserver...")
     application.listen(8888)
     tornado.ioloop.IOLoop.instance().start()
