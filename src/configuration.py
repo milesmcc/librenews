@@ -37,7 +37,8 @@ default_config = {
         "access_token_secret": "XXXXX"
     },
     "accounts": [
-        ["@BBCBreaking", "BBC"]
+        ["@BBCBreaking", "BBC", "Breaking News"],
+        ["@LibreNewsApp", "LibreNews", "Announcements"]
     ]
 }
 
@@ -51,6 +52,17 @@ def get_name(handle):
             names[account[0][1:]] = account[1]
             # so that @names defined in config still match
     return names[handle]
+
+channels = None
+def get_channel(handle):
+    global channels
+    if channels is None:
+        channels = {}
+        for account in get_accounts():
+            channels[account[0]] = account[2]
+            channels[account[0][1:]] = account[2]
+            # so that @names defined in config still match
+    return channels[handle]
 
 # Generate the default config. Will override existing config.
 def generate_config():

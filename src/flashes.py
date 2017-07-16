@@ -33,7 +33,7 @@ latest_flashes = []
 link_regex = re.compile(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»\"\"'']))")
 rt_regex = re.compile(r"(RT @)\w+(:)")
 
-def generate_flash(text, link, source, identifier, time):
+def generate_flash(text, link, source, identifier, time, channel):
     text = re.sub(link_regex, "", text)
     text = re.sub(rt_regex, "", text)
     text = text.strip()
@@ -43,7 +43,7 @@ def generate_flash(text, link, source, identifier, time):
         "text": text, # allows unicode
         "link": str(link), # does not allow unicode
         "source": str(source), # does not allow unicode
-        "channel": str(source), # does not allow unicode
+        "channel": str(channel), # does not allow unicode
         "id": str(identifier), # does not allow unicode
         "time": str(time) # does not allow unicode
     }
@@ -72,7 +72,7 @@ def load_flashes():
                     if len(tweet['entities']['urls']) > 0:
                         url = tweet['entities']["urls"][-1]['expanded_url']
             push_flash(
-                generate_flash(tweet["text"], url, accountPair[1], tweet["id"], tweet["created_at"])
+                generate_flash(tweet["text"], url, accountPair[1], tweet["id"], tweet["created_at"], accountPair[2])
                 )
         say("Loaded " + str(len(latest_tweets)) + " flashes from " + accountPair[0])
     ok("Loaded " + str(len(latest_flashes)) + " flashes")
@@ -90,7 +90,9 @@ class AccountListener(tweepy.StreamListener):
                                        url,
                                        configuration.get_name(status.user.screen_name),
                                        status.id,
-                                       status.created_at)
+                                       status.created_at,
+                                       configuration.get_channel(status.user.screen_name)
+                                       )
                 push_flash(flash)
                 ok("Detected and pushed flash: " + str(flash))
             else:

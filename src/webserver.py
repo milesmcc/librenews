@@ -34,7 +34,7 @@ class ApiHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "application/json")
         data = {
             "server": "LibreNews Central",
-            "channels": [k[1] for k in configuration.get_accounts()],
+            "channels": [k[2] for k in configuration.get_accounts()],
             "latest": flashes.get_latest_flashes(25)
         }
         self.write(unicode(json.dumps(data, sort_keys=True, indent=4)))
