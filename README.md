@@ -40,12 +40,12 @@ Here is a sample `/api` response:
 
 ```{
     "channels": [
-        "BBC",
-        "CNN"
+        "Announcements",
+        "Breaking News"
     ],
     "latest": [
         {
-            "channel": "BBC",
+            "channel": "Breaking News",
             "id": 879866339728515073,
             "link": "http://bbc.in/2tiEJYW",
             "source": "BBC",
@@ -54,7 +54,7 @@ Here is a sample `/api` response:
         },
         ...
         {
-            "channel": "BBC",
+            "channel": "Breaking News",
             "id": 879645310250876928,
             "link": "http://bbc.in/2tg2bq3",
             "source": "BBC",
@@ -99,11 +99,13 @@ The newly generated config will look something like this:
     "accounts": [
         [
             "@BBCBreaking",
-            "BBC"
+            "BBC",
+            "Breaking News"
         ],
         [
-            "@cnnbrk",
-            "CNN"
+            "@LibreNewsApp",
+            "LibreNews",
+            "Announcements"
         ]
     ],
     "twitter": {
@@ -115,7 +117,7 @@ The newly generated config will look something like this:
 }
 ```
 
-Get your credentials from Twitter at <https://apps.twitter.com>. Configure the accounts that you would like LibreNews-Server to monitor. The first field is the account's Twitter handle, and the second field is its human readable source name.
+Get your credentials from Twitter at <https://apps.twitter.com>. Configure the accounts that you would like LibreNews-Server to monitor. The first field is the account's Twitter handle, the second field is its human readable source name, and the third field is for the channel the account belongs to.
 
 Once you correctly input your Twitter credentials, run `webserver.py` once more (in the exact same way) and watch as the server magically comes online at port `8888`. If you navigate to `http://localhost:8888` in your browser, you should find the beautiful LibreNews home page! This LibreNews server implementation has no database.
 
@@ -141,7 +143,7 @@ The API must provide a JSON-encoded object as its API response. The response _ma
 
 The `channel` field is a JSON array of strings, corresponding to all of the unique channels referenced in the `latest` section. It is possible for a channel to be listed in the `channels` field, but not in the `latest` feed. This just means that no flashes have recently come out of that channel. The opposite may not be true, however: all channels referenced in `latest` must be also present in the `channels` field.
 
-The default LibreNews server's `channels` field looks like the following (at the time of this writing): `"channels": [ "BBC", "CNN" ]`
+The default LibreNews server's `channels` field looks like the following (at the time of this writing): `"channels": [ "Breaking News", "Announcements" ]`
 
 ##### 4.1.2.2 Latest specification
 
