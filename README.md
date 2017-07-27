@@ -175,3 +175,6 @@ All the other methods you may see in `flashes.py` are merely artifacts of this p
 
 #### 4.3 Final Contribution Notes
 LibreNews-Server is an open source project, and is licensed under GPLv3. Contribute!
+
+This product includes GeoLite data created by MaxMind, available from
+[http://www.maxmind.com](http://www.maxmind.com).
