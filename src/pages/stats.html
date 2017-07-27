@@ -11,7 +11,7 @@
   <meta name="author" content="Miles McCain">
   <link rel="icon" href="assets/favicon.png">
 
-  <title>LibreNews — free, customizable, and decentralized breaking news notifications</title>
+  <title>LibreNews — server stats</title>
 
   <!-- Bootstrap core CSS -->
   <link href="static/bootstrap.min.css" rel="stylesheet">
@@ -46,29 +46,35 @@
             <h3 class="masthead-brand">LibreNews</h3>
             <nav>
               <ul class="nav masthead-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
                 <li><a href="/api">API</a></li>
                 <li><a href="https://github.com/milesmcc/LibreNews-Server/blob/master/README.md">Documentation</a></li>
-                <li><a href="/stats">Stats</a></li>
+                <li class="active"><a href="/stats">Stats</a></li>
               </ul>
             </nav>
           </div>
         </div>
 
         <div class="inner cover">
-          <h1 class="cover-heading">LibreNews</h1>
-          <p class="lead">A free, open source, speedy, and deeply customizable breaking news notification system.</p>
+          <h1 class="cover-heading">LibreNews Stats</h1>
+          <p class="lead">General aggregated statistics from the devices that have connected to this LibreNews server.</p>
           <p class="lead">
-            <a href="#" class="btn btn-lg btn-default" disabled>iOS</a> <a href="https://play.google.com/store/apps/details?id=app.librenews.io.librenews" class="btn btn-lg btn-default" disabled>Android</a>
+            This server restarted <span style="font-family: monospace;">{{last_restart}}</span>. Since then, it has seen the following:
           </p>
           <br><br>
-          <div class="flash">
-            <a href="{{flash['link']}}">
-              <p class="lead" style="font-family: monospace;"><small><i class="fa fa-circle text-danger Blink">&nbsp;&nbsp;</i>{{time}}</small></p>
-              <p class="lead"><strong>{{flash['text']}}</strong></p>
-              <p class="lead" style="font-family: monospace;"><small><i>via {{flash['source']}}</i></small></p>
-            </a>
-          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Estimated devices<br>
+              <span style="font-family: monospace;">{{devices}}</span>
+            </div>
+            <div class="col-md-4">
+              Total requests<br>
+              <span style="font-family: monospace;">{{total_requests}}</span>
+            </div>
+            <div class="col-md-4">
+              Requests per second<br>
+              <span style="font-family: monospace;">{{requests_per_second}}</span>
+            </div>
         </div>
 
         <div class="mastfoot">
