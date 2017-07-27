@@ -8,6 +8,7 @@ ips = []
 starttime = datetime.now(pytz.UTC)
 
 def request(ip_string):
+    global requests, ips
     requests += 1
     if ip_string not in ips:
         ips.append(ip_string)

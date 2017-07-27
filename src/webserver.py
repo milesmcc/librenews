@@ -18,6 +18,7 @@ unless you're absolutely sure!
 def get_ip(request):
     x_real_ip = request.headers.get("X-Real-IP")
     remote_ip = x_real_ip or request.remote_ip
+    return remote_ip
 
 class IndexHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
@@ -38,7 +39,7 @@ class StatsHandler(tornado.web.RequestHandler):
     def get(self):
         req_resp = stats.request(str(get_ip(self.request)))
         say("Received STATS request (" + req_resp + ")")
-        self.render("pages/stats.html", last_restart=stats.time(), devices=stats.unique_devices(), requests=stats.requests, requests_per_second=stats.requests_per_second())
+        self.render("pages/stats.html", last_restart=stats.time(), devices=stats.unique_devices(), total_requests=stats.requests, requests_per_second=stats.requests_per_second())
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
