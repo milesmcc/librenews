@@ -61,7 +61,7 @@ class ApiHandler(tornado.web.RequestHandler):
             "channels": [k[2] for k in configuration.get_accounts()],
             "latest": flashes.get_latest_flashes(25)
         }
-        self.write(unicode(json.dumps(data, sort_keys=True)))
+        self.write(unicode(json.dumps(data, sort_keys=True, separators=(',',':'))))
 class ErrorHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         try:
