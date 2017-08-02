@@ -36,6 +36,9 @@ Most of the power of the LibreNews server for developers lies behind the `/api` 
 
 The `/api` endpoint provides a RESTful JSON api. It provides the latest 25 flashes, as well as the server's name and the channels offered by the server. Because one of the goals of LibreNews was to make it as simple as possible, it is not currently possible to specify only certain channels in the GET request.
 
+The response can be filtered with the following HTTP parameters:
+* `latest`: specify the lowest possible ID (exclusive) that flashes may have in order to be returned. For example, the following request would only return flashes newer than the flash ID `892106396610768897`: `/api?latest=892106396610768897`
+
 Here is a sample `/api` response:
 
 ```{

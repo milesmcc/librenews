@@ -49,17 +49,22 @@ class StatsHandler(tornado.web.RequestHandler):
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
-    def get(self, latest=-1):
+    def get(self):
         try:
             req_resp = stats.request(str(get_ip(self.request)))
         except:
             error("Errored while handling request IP -- still served...")
         say("Received API request (" + req_resp + ")")
         self.set_header("Content-Type", "application/json")
+        latest = -1
+        try:
+            latest = int(self.get_argument('latest'))
+        except:
+            pass # no latest flash specified
         data = {
             "server": "LibreNews Central",
             "channels": [k[2] for k in configuration.get_accounts()],
-            "latest": [flash for flash in flashes.get_latest_flashes(25) if int(flash['id']) > latest]
+            "latest": [flash for flash in flashes.get_latest_flashes(25) if int(flash['id']) > int(latest)]
         }
         self.write(unicode(json.dumps(data, sort_keys=True, separators=(',',':'))))
 class ErrorHandler(tornado.web.RequestHandler):
