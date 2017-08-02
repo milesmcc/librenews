@@ -121,7 +121,9 @@ Get your credentials from Twitter at <https://apps.twitter.com>. Configure the a
 
 Once you correctly input your Twitter credentials, run `webserver.py` once more (in the exact same way) and watch as the server magically comes online at port `8888`. If you navigate to `http://localhost:8888` in your browser, you should find the beautiful LibreNews home page! This LibreNews server implementation has no database.
 
-For production servers, it's heavily recommended that you use nginx as a reverse proxy. That way, you'll be able to accept standard HTTP and HTTPS requests on ports 80 and 443, respectively. (That is, if you choose to even process HTTP requests -- because the server at <https://librenews.io> _doesn't!_)
+For production servers, it's heavily recommended that you use nginx as a reverse proxy. That way, you'll be able to accept standard HTTP and HTTPS requests on ports 80 and 443, respectively. (That is, if you choose to even process HTTP requests -- because the server at <https://librenews.io> _doesn't!_) 
+
+> It's important to note that the default [LibreNews Client](https://github.com/milesmcc/LibreNews-Android) does *not* allow server connections over HTTP.
 
 ## 4\. LibreNews Server hacker Guide
 
