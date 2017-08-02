@@ -66,7 +66,7 @@ Here is a sample `/api` response:
 }
 ```
 
-The `id` of a flash is guaranteed to be unique. It is safe to use this to differentiate between flashes. For this server implementation, the `id` is the Tweet's `id`. It must be an `integer` or `large integer` value, and must be chronological (i.e. flashes chronology may be compared by referencing their IDs, as older flashes must have lower IDs than newer ones).
+The `id` of a flash is guaranteed to be unique. It is safe to use this to differentiate between flashes. For this server implementation, the `id` is the Tweet's `id`. It must be a positive **unsigned** `integer` or `large integer` value, and must be chronological (i.e. flashes chronology may be compared by referencing their IDs, as older flashes must have lower IDs than newer ones).
 
 **All LibreNews server implementations must follow this API specification. For more details on this specification, see documentation section 4.1.**
 

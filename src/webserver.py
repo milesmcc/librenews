@@ -49,7 +49,7 @@ class StatsHandler(tornado.web.RequestHandler):
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
-    def get(self):
+    def get(self, latest=-1):
         try:
             req_resp = stats.request(str(get_ip(self.request)))
         except:
@@ -59,7 +59,7 @@ class ApiHandler(tornado.web.RequestHandler):
         data = {
             "server": "LibreNews Central",
             "channels": [k[2] for k in configuration.get_accounts()],
-            "latest": flashes.get_latest_flashes(25)
+            "latest": [flash for flash in flashes.get_latest_flashes(25) if int(flash['id']) > latest]
         }
         self.write(unicode(json.dumps(data, sort_keys=True, separators=(',',':'))))
 class ErrorHandler(tornado.web.RequestHandler):
