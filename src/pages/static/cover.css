@@ -185,3 +185,7 @@ body {
     width: 700px;
   }
 }
+
+.large {
+  font-size: 120%;
+}

@@ -65,23 +65,23 @@
           <br><br>
           <div class="row">
             <div class="col-md-4">
-              Estimated devices (by IP)<br>
+              <span class="large">Estimated devices (by IP)</span><br>
               <span style="font-family: monospace;">{{devices}}</span>
             </div>
             <div class="col-md-4">
-              Total requests<br>
+              <span class="large">Total requests</span><br>
               <span style="font-family: monospace;">{{total_requests}}</span>
             </div>
             <div class="col-md-4">
-              Requests per second<br>
+              <span class="large">Requests per second</span><br>
               <span style="font-family: monospace;">{{requests_per_second}}</span>
             </div>
           </div>
           <br><br>
-          Top countries<br>
+          <span class="large">Top countries</span><br>
           <div class="row">
             {% for country_data in countries %}
-              <strong>{{country_data[0]}}</strong> &mdash; <span style="font-family: monospace;">{{country_data[1]}}</span>
+              <strong>{{country_data[0]}}</strong> &mdash; <span style="font-family: monospace;">{{country_data[1]}}</span><br>
             {% end %}
           </div>
           <div class="mastfoot">
