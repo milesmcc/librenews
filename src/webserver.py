@@ -30,7 +30,8 @@ class IndexHandler(tornado.web.RequestHandler):
         except:
             error("Errored while handling request IP -- still served...")
         say("Received INDEX request (" + req_resp + ")")
-        flash = tornado.escape.xhtml_unescape(flashes.get_latest_flashes(1)[0])
+        flash = flashes.get_latest_flashes(1)[0]
+        flash['text'] = tornado.escape.xhtml_unescape(flash['text'])
         time = str(flash['time'])
         if isinstance(flash['time'], basestring):
             time = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
