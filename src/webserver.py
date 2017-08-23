@@ -44,19 +44,19 @@ class StatsHandler(tornado.web.RequestHandler):
     def get(self):
         try:
             req_resp = stats.request(str(get_ip(self.request)))
+            say("Received STATS request (" + req_resp + ")")
         except:
             error("Errored while handling request IP -- still served...")
-        say("Received STATS request (" + req_resp + ")")
-        self.render("pages/stats.html", last_restart=stats.time(), devices=stats.unique_devices(), total_requests=stats.requests, requests_per_second=stats.requests_per_second())
+        self.render("pages/stats.html", countries=stats.top_countries(), last_restart=stats.time(), devices=stats.unique_devices(), total_requests=stats.requests, requests_per_second=stats.requests_per_second())
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
     def get(self):
         try:
             req_resp = stats.request(str(get_ip(self.request)))
+            say("Received API request (" + req_resp + ")")
         except:
             error("Errored while handling request IP -- still served...")
-        say("Received API request (" + req_resp + ")")
         self.set_header("Content-Type", "application/json")
         latest = -1
         try:
