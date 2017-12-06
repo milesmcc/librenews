@@ -86,6 +86,7 @@ To start a LibreNews server, first make sure that you have `Python 2` and `pip` 
 - `python-dateutil`
 - `tornado`
 - `tweepy`
+- `python-geoip`
 
 Once you have all of these installed, you can download LibreNews if you haven't already. This is done by navigating into the parent directory where you would like to place the root LibreNews folder and running `git clone https://github.com/milesmcc/LibreNews-Server.git`. A new folder, `LibreNews-Server`, will be created.
 
