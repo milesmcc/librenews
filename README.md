@@ -88,6 +88,8 @@ To start a LibreNews server, first make sure that you have `Python 2` and `pip` 
 - `tweepy`
 - `python-geoip`
 
+(These dependencies are also listed in `requirements.txt`, so they can all be installed at once once the repository is cloned to your local machine with `pip install -r requirements.txt`.)
+
 Once you have all of these installed, you can download LibreNews if you haven't already. This is done by navigating into the parent directory where you would like to place the root LibreNews folder and running `git clone https://github.com/milesmcc/LibreNews-Server.git`. A new folder, `LibreNews-Server`, will be created.
 
 Navigate to the directory in which you would like for LibreNews to create its configuration file (`LibreNews-Server/src` is fine) and run `python webserver.py`. Remember that if you're not running LibreNews out of the `src` directory, you'll need to reference `webserver.py` using its absolute or relative path.
