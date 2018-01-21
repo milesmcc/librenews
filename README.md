@@ -4,7 +4,7 @@ LibreNews-Server is the server side of the LibreNews ecosystem. It provides a RE
 
 This file will provide three documentations: 1) how to use LibreNews-Server from the perspective of a user, 2) how to use LibreNews server from the perspective of a developer who is making a LibreNews client, 3) from someone who wants to run a LibreNews server for herself, and 4) from the perspective of a developer who wants to modify or build a new LibreNews-Server.
 
-## 0\. General Terminology
+## 0\. General terminology
 
 LibreNews uses a few terms that you may be unfamiliar with in its API and UI.
 
