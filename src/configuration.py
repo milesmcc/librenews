@@ -1,9 +1,12 @@
 import json
-from userio import *
 import os
 import sys
 
+from userio import ok, say, warn
+
 twitter_credentials = None
+
+
 # Get the twitter login credentials in the form of a dict
 def get_twitter_credentials():
     global twitter_credentials
@@ -13,21 +16,26 @@ def get_twitter_credentials():
             twitter_credentials = json_data["twitter"]
     return twitter_credentials
 
+
 accounts = None
+
+
 # Get an array of the user-meaningful handles of the news accounts
 def get_accounts():
     global accounts
-    if accounts == None:
+    if accounts is None:
         with open("config.json") as config:
             json_data = json.load(config)
             accounts = json_data["accounts"]
     return accounts
+
 
 def is_following(username):
     for account in get_accounts():
         if username == account[0] or '@' + username == account[0]:
             return True
     return False
+
 
 default_config = {
     "twitter": {
@@ -43,6 +51,8 @@ default_config = {
 }
 
 names = None
+
+
 def get_name(handle):
     global names
     if names is None:
@@ -53,7 +63,10 @@ def get_name(handle):
             # so that @names defined in config still match
     return names[handle]
 
+
 channels = None
+
+
 def get_channel(handle):
     global channels
     if channels is None:
@@ -64,12 +77,14 @@ def get_channel(handle):
             # so that @names defined in config still match
     return channels[handle]
 
+
 # Generate the default config. Will override existing config.
 def generate_config():
     warn("Generating default config...")
     with open("config.json", "w") as config:
         json.dump(default_config, config, indent=4, sort_keys=True)
         ok("Generated default config!")
+
 
 if not os.path.exists("config.json"):
     warn("No configuration file found!")

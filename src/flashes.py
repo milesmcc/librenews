@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import configuration
-import twitter
-from userio import *
-import tweepy
-import tweepy
+import datetime
 import re
 from threading import Thread
-import datetime
-import json
+
+import configuration
+import tweepy
+import twitter
+from userio import error, ok, say
+
 
 # Called when it is time to load the data at start time.
 def go():
     load_flashes()
     start_streamer()
+
 
 # Called by the webserver to get flashes. Returns a sorted array of the
 # latest flashes, in order from newest to oldest.
@@ -24,14 +25,18 @@ def get_latest_flashes(num):
         sort_flashes()
     return latest_flashes[:num]
 
+
 """
 Everything below this point is an artifact of Twitter as a data source.
 Delete it if you want, but make sure that everything above is properly implemented.
 """
 
 latest_flashes = []
-link_regex = re.compile(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»\"\"'']))")
+link_regex = re.compile(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+" +
+                        r"[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(" +
+                        r"([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»\"\"'']))")
 rt_regex = re.compile(r"(RT @)\w+(:)")
+
 
 def generate_flash(text, link, source, identifier, time, channel):
     text = re.sub(link_regex, "", text)
@@ -40,25 +45,30 @@ def generate_flash(text, link, source, identifier, time, channel):
     if isinstance(time, datetime.datetime):
         time = time.strftime("%a %b %d %H:%M:%S +0000 %Y")
     return {
-        "text": text, # allows unicode
-        "link": str(link), # does not allow unicode
-        "source": str(source), # does not allow unicode
-        "channel": str(channel), # does not allow unicode
-        "id": str(identifier), # does not allow unicode
-        "time": str(time) # does not allow unicode
+        "text": text,  # allows unicode
+        "link": str(link),  # does not allow unicode
+        "source": str(source),  # does not allow unicode
+        "channel": str(channel),  # does not allow unicode
+        "id": str(identifier),  # does not allow unicode
+        "time": str(time)  # does not allow unicode
     }
 
+
 is_sorted = False
+
 
 def push_flash(flash):
     global is_sorted
     latest_flashes.append(flash)
     is_sorted = False
 
+
 def sort_flashes():
     global latest_flashes
     latest_flashes = sorted(latest_flashes, key=lambda k: k["id"], reverse=True)
+    global is_sorted
     is_sorted = True
+
 
 def load_flashes():
     say("Loading latest flashes...")
@@ -104,17 +114,20 @@ class AccountListener(tweepy.StreamListener):
     def on_error(self, status):
         error("Encountered an error while processing a status: " + str(status))
         if status == 420:
-            #returning False in on_data disconnects the stream
+            # returning False in on_data disconnects the stream
             return False
         return True
 
+
 def streamer_entrypoint():
     twitter_stream = tweepy.Stream(twitter.auth, AccountListener())
-    twitter_stream.filter(follow=[str(twitter.get_id(k[0])) for k in configuration.get_accounts()], async=False)
+    twitter_stream.filter(follow=[str(twitter.get_id(k[0])) for k in configuration.get_accounts()],
+                          async=False)
+
 
 def start_streamer():
     ok("Starting streamer...")
-    thread = Thread(target = streamer_entrypoint)
+    thread = Thread(target=streamer_entrypoint)
     thread.setDaemon(True)
     thread.start()
     ok("Streamer started!")
