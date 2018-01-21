@@ -30,7 +30,7 @@ For detailed instructions on how to use your LibreNews client, please refer to i
 
 ## 2\. Developer documentation
 
-Want to make your own LibreNews client? You've come to the write place.
+Want to make your own LibreNews client? You've come to the right place.
 
 Most of the power of the LibreNews server for developers lies behind the `/api` endpoint. This is where you'll want to go to get the data for your app. This endpoint requires no authentication and has no rate limiting, however please be reasonable in the load that your application puts on the server. (You may be kindly asked to run your own notification server if your application is found to put so much load on the server that it negatively affects other users.)
 
