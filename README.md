@@ -22,7 +22,7 @@ LibreNews uses a few terms that you may be unfamiliar with in its API and UI.
 
 ![LibreNews Starting](images/cli.png) _(LibreNews starting up!)_
 
-### 1.2 Usage Guide
+### 1.2 Usage guide
 
 There are few reasons that an end-user would need to interact with the server themselves. The webserver only would provide them a visual interface by which they could see the server's latest notification. Indeed, it provides little utility on its own. **Distributing notifications via a web interface (using websockets and the web notification API) is on the roadmap.**
 
@@ -75,7 +75,7 @@ The `id` of a flash is guaranteed to be unique. It is safe to use this to differ
 
 It is best to ping the LibreNews server every two minutes _at most_. Your notification application will need to continually ping the server, but please keep the rate reasonable. Also remember that network requests eat up your users' phone data... so be careful, and remember to make your app customizable!
 
-## 3\. LibreNews Server Operator documentation
+## 3\. LibreNews Server operator documentation
 
 Running a LibreNews server can be quite easy, or it can be quite difficult. This server was meant to be as simple to set up as possible in order to encourage the creation of many other LibreNews servers and therefore further decentralize the LibreNews ecosystem.
 
@@ -131,7 +131,7 @@ For production servers, it's heavily recommended that you use nginx as a reverse
 
 > It's important to note that the default [LibreNews Client](https://github.com/milesmcc/LibreNews-Android) does *not* allow server connections over HTTP.
 
-## 4\. LibreNews Server hacker Guide
+## 4\. LibreNews Server hacker guide
 
 So you want to hack on the server? Go for it! Whether you want to contribute to this server or make your own, there are a few things you'll need to know.
 
@@ -181,7 +181,7 @@ When run, `webserver.py` will import and run `go()` in `flashes.py`, and then st
 
 All the other methods you may see in `flashes.py` are merely artifacts of this particular implementation's data structure.
 
-#### 4.3 Final Contribution Notes
+#### 4.3 Final contribution notes
 LibreNews-Server is an open source project, and is licensed under GPLv3. Contribute!
 
 This product includes GeoLite data created by MaxMind, available from
