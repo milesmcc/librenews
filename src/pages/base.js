@@ -5,10 +5,7 @@ if ('serviceWorker' in navigator) {
 
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      if (isSubscribed()) {
-        $("#notification-button").prop("disabled", true);
-        $("#notification-button").text("You're Subscribed");
-      }
+      ifSubscribedManage()
     }, function(err) {
       // registration failed :(
       console.log('ServiceWorker registration failed: ', err);
@@ -54,8 +51,13 @@ function askNotificationPermission() {
     });
 }
 
-function isSubscribed() {
-  return registration.pushManager.getSubscription() != null;
+function ifSubscribedManage() {
+  registration.pushManager.getSubscription().then(function(pushSubscription) {
+    if(pushSubscription != null){
+      $("#notification-button").prop("disabled", true);
+      $("#notification-button").text("You're Subscribed");
+    }
+  });
 }
 
 function unsubscribeAllPushNotifications() {

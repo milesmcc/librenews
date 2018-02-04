@@ -30,7 +30,8 @@ def _push_notification_to_subscribers(subscriptions, data):
                 subscription_info=subscription,
                 data=data,
                 vapid_private_key=configuration.get_vapid_public_private_key_pair()[1],
-                vapid_claims=VAPID_CLAIMS
+                vapid_claims=VAPID_CLAIMS,
+                #gcm_key=configuration.get_gcm_key(),
             )
         except Exception as e:
             userio.error("    ...unable to send notification: " + str(e))

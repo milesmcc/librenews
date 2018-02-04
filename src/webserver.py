@@ -105,19 +105,25 @@ class ServiceWorkerHandler(tornado.web.RequestHandler):
     def get(self):
         service_worker = """
 self.addEventListener('push', function(event) {
-    event.waitUntil(function(){
-  if (event.data) {
-    fl = event.data.json()
-    console.log('This push event has data: ', event.data.text());
-    self.registration.showNotification(fl["channel"] + " - " + fl["source"], {
-        body: fl["text"],
-        timestamp: Date.parse(fl["time"]),
-        data: fl
-      });
-  } else {
-    console.log('This push event has no data.');
-  }
-  });
+    const notificationPromise = new Promise(function() {
+        if (event.data) {
+          fl = event.data.json()
+          console.log('This push event has data: ', event.data.text());
+          self.registration.showNotification(fl["channel"] + " - " + fl["source"], {
+              body: fl["text"],
+              timestamp: Date.parse(fl["time"]),
+              data: fl
+            });
+        } else {
+          console.log('This push event has no data.');
+        }
+    })
+
+    const promiseChain = Promise.all([
+        notificationPromise,
+    ]);
+
+    event.waitUntil(promiseChain);
 });
 
 

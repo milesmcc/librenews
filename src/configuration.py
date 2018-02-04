@@ -33,6 +33,15 @@ def get_vapid_public_private_key_pair():
         json_data = json.load(config)
         return (json_data["vapid"]["public_key"], json_data["vapid"]["private_key"])
 
+# key = None
+#
+# def get_gcm_key():
+#     global key
+#     if key is None:
+#         with open("config.json") as config:
+#             json_data = json.load(config)
+#             key = json_data["gcm_key"]
+
 def is_following(username):
     for account in get_accounts():
         if username == account[0] or '@' + username == account[0]:
@@ -54,7 +63,8 @@ default_config = {
     "vapid": {
         "private_key": "XXXXX",
         "public_key": "XXXXX",
-    }
+    },
+    # "gcm_key": "XXXXX"
 }
 
 names = None
