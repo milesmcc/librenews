@@ -2,7 +2,6 @@ from pywebpush import webpush, WebPushException
 import configuration
 import thread
 from pymongo import MongoClient
-import flash
 import userio
 import json
 client = MongoClient()
@@ -14,12 +13,17 @@ VAPID_CLAIMS = {
 }
 
 def _is_valid_subscription(data):
-    if "endpoint" in data and "keys" in data and "auth" in data["keys"] and len(json.dumps(data) < 512:
+    if ("endpoint" in data) and \
+       ("keys" in data) and \
+       ("auth" in data["keys"]) and \
+       (len(json.dumps(data)) < 512):
         return True
     return False
 
+# DO NOT CALL THIS FUNCTION FROM THE MAIN THREAD
+# IT IS PRIVATE FOR A REASON
 def _push_notification_to_subscribers(subscriptions, data):
-    userio.say("Sending notification to " + str(len(subscriptions)) + " subscribers in a new thread...")
+    userio.say("Sending notification to " + str(subscriptions.count()) + " subscribers in a new thread...")
     for subscription in subscriptions:
         try:
             webpush(
@@ -30,12 +34,15 @@ def _push_notification_to_subscribers(subscriptions, data):
             )
         except Exception as e:
             userio.error("    ...unable to send notification: " + str(e))
+            db.subscriptions.remove(subscription)
+            userio.say("    ...removed subscription!")
     userio.ok("Finished sending notification.")
+    thread.exit()
 
 
 def push_notification(flash):
     subscriptions = db.subscriptions.find()
-    thread.start_new_thread(_push_notification_to_subscribers(subscriptions, json.dumps(flash)))
+    thread.start_new_thread(_push_notification_to_subscribers, (subscriptions, json.dumps(flash)))
 
 def register_new_receiver(subscription_info):
     if _is_valid_subscription(subscription_info):

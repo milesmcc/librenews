@@ -9,12 +9,13 @@ import configuration
 import tweepy
 import twitter
 from userio import error, ok, say
+import push
 
 
 # Called when it is time to load the data at start time.
 def go():
     load_flashes()
-    start_streamer()
+    #start_streamer()
 
 
 # Called by the webserver to get flashes. Returns a sorted array of the
@@ -104,6 +105,7 @@ class AccountListener(tweepy.StreamListener):
                                        configuration.get_channel(status.user.screen_name)
                                        )
                 push_flash(flash)
+                push.push_notification(flash)
                 ok("Detected and pushed flash: " + str(flash))
             else:
                 say("...from an irrelevant source.")

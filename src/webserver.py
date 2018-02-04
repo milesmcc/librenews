@@ -105,20 +105,41 @@ class ServiceWorkerHandler(tornado.web.RequestHandler):
     def get(self):
         service_worker = """
 self.addEventListener('push', function(event) {
+    event.waitUntil(function(){
   if (event.data) {
     fl = event.data.json()
     console.log('This push event has data: ', event.data.text());
-    self.registration.showNotification(fl["channel"] + " via " + fl["source"], {
+    self.registration.showNotification(fl["channel"] + " - " + fl["source"], {
         body: fl["text"],
         timestamp: Date.parse(fl["time"]),
-        notification.onclick = function(event) {
-          event.preventDefault();
-          window.open(fl["link"], '_blank');
-        }
+        data: fl
       });
   } else {
     console.log('This push event has no data.');
   }
+  });
+});
+
+
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close(); // Android needs explicit close.
+    let url = event.notification.data["link"];
+    event.waitUntil(
+        clients.matchAll({type: 'window'}).then( windowClients => {
+            // Check if there is already a window/tab open with the target URL
+            for (var i = 0; i < windowClients.length; i++) {
+                var client = windowClients[i];
+                // If so, just focus it.
+                if (client.url === url && 'focus' in client) {
+                    return client.focus();
+                }
+            }
+            // If not, then open the target URL in a new window/tab.
+            if (clients.openWindow) {
+                return clients.openWindow(url);
+            }
+        })
+    );
 });
         """
         self.write(service_worker)
@@ -127,6 +148,7 @@ self.addEventListener('push', function(event) {
 
 class PushHandler(tornado.web.RequestHandler):
     def post(self):
+        say("Receiving new subscription: " + self.request.body)
         self.set_header("Content-Type", "application/json")
         if push.register_new_receiver(tornado.escape.json_decode(self.request.body)):
             self.write(json.dumps({"response": "OK"}))
