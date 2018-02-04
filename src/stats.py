@@ -6,6 +6,8 @@ import humanize
 import pycountry
 from geoip import geolite2
 
+import push
+
 requests = 0
 ips = []
 starttime = datetime.now(pytz.UTC)
@@ -33,7 +35,7 @@ def request(ip_string):
 
 
 def unique_devices():  # give or take
-    return len(ips)
+    return len(ips) + push.get_total_recipients()
 
 
 def time():

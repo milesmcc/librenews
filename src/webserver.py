@@ -44,7 +44,9 @@ class IndexHandler(tornado.web.RequestHandler):
                 flash['time'] = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
             if isinstance(flash['time'], datetime.datetime):
                 flash['time'] = arrow.get(flash['time']).humanize()
-        self.render("pages/index.html", flashes=alerts)
+        self.render("pages/index.html", flashes=alerts, countries=stats.top_countries(),
+                    last_restart=stats.time(), devices=stats.unique_devices(), total_requests=stats.requests,
+                    requests_per_second=str(stats.requests_per_second())[:5])
 
 class StatsHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):

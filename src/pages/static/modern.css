@@ -22,7 +22,7 @@ p a {
   text-decoration-style: dashed;
 }
 
-p a:hover {
+p a:hover,ul a:hover {
   color: inherit;
   text-decoration: underline;
   text-decoration-style: solid;
@@ -30,6 +30,10 @@ p a:hover {
 
 #notification-button:hover {
   color: black;
+}
+
+#notification-button {
+  text-shadow: none;
 }
 
 h5 a {
@@ -46,18 +50,17 @@ h5 a:hover {
   font-weight: 600;
 }
 
-#lede li {
+li {
   display: inline;
   font-size: 130%;
   margin-right: 1em;
 }
 
-#lede ul {
+ul {
   padding-left: 0px;
-  margin-top: -0.75em;
 }
 
-#lede li a {
+li a {
   color: #ccc;
 }
 
@@ -66,11 +69,11 @@ h5 a:hover {
 }
 
 .vertdots {
-    border-left: 2px dotted #888;
+    border-left: thin solid white;
     height: 5vh;
     width: 0px;
     display: block;
-    margin-left: 25%;
+    margin-left: 50%;
     margin-top: -1em;
 }
 
@@ -110,4 +113,38 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   background-color: #212529;
+  background-image: url("background.jpeg");
+  /* via https://www.pexels.com/photo/black-textile-41949/, licensed CC0 */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  text-shadow: 1px 1px 3px black, 1px -1px 3px black, -1px 1px 3px black, -1px -1px 3px black;
+}
+
+#notification-button:hover {
+  text-shadow: none;
+}
+
+.librecard {
+  border-style: solid;
+  border-width: thin;
+  border-radius: 5px;
+}
+
+#info p {
+  font-size: 75%;
+}
+
+.Blink {
+    animation: blinker 1s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+#global section {
+  padding-bottom: 5vh;
 }

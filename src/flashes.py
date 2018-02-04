@@ -15,7 +15,7 @@ import push
 # Called when it is time to load the data at start time.
 def go():
     load_flashes()
-    #start_streamer()
+    start_streamer()
 
 
 # Called by the webserver to get flashes. Returns a sorted array of the

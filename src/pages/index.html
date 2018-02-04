@@ -14,7 +14,7 @@
   <title>LibreNews — free, customizable, and decentralized breaking news notifications</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
   <script src="static/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
@@ -30,14 +30,14 @@
 </head>
 
 <body class="text-light">
-  <div class="container ibm-type-light" id="full-document">
+  <div class="container ibm" id="full-document">
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8">
         <div class="row">
           <div class="col-lg-6" id="global">
             <section id="lede">
-              <h1 class="big text-primary">LibreNews</h1>
+              <h1 class="big">LibreNews</h1>
               <ul class="ibm-type-mono">
                 <li>
                   <a href="https://github.com/milesmcc/LibreNews-Server">Code</a>
@@ -46,21 +46,18 @@
                   <a href="/api">API</a>
                 </li>
                 <li>
-                  <a href="https://github.com/milesmcc/LibreNews-Server/blob/master/README.md">Documentation</a>
+                  <a href="https://github.com/milesmcc/LibreNews-Server/blob/master/README.md">Use &rarr;</a>
                 </li>
               </ul>
             </section>
-            <object class="vertdots"></object>
+            <section id="lede">
+              <p class="lead ibm-type-semibold">Live breaking news notifications. Secure, private, and decentralized. No installation required.</p>
+            </section>
             <section id="about">
-              <p class="lead">LibreNews is a decentralized, open source, and secure breaking news notification system. It is available for all modern devices, and offers <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/README.md">native Android integration</a>.</p>
+              <p>A decentralized, open source, and secure breaking news notification system. LibreNews is available on any desktop or laptop and offers <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/README.md">native Android integration</a>. <a href="https://github.com/milesmcc/LibreNews-Server/blob/master/README.md">Learn more &rarr;</a></p>
+              <p>An estimated <span class="ibm-text-mono">{{devices}}</span> devices have sent upwards of <span class="ibm-text-mono">{{total_requests}}</span> total requests to this LibreNews server (<span class="ibm-text-mono">{{requests_per_second}} req/s</span>)
+                since the server restarted <span class="ibm-text-mono">{{last_restart}}</span>.</p>
             </section>
-            <object class="vertdots"></object>
-            <section id="install">
-              <p>
-                <a class="btn btn-outline-light btn-lg ibm-type-mono" id="notification-button" onclick="askNotificationPermission()">Turn On Notifications</a>
-              </p>
-            </section>
-            <object class="vertdots"></object>
             <section id="info">
               <p>
                 LibreNews doesn't <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/STOPTRACKING.md">track</a> you, but we have a <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/PRIVACY.md">privacy policy</a> regardless.
@@ -69,18 +66,26 @@
             </section>
           </div>
           <div class="col-lg-6" id="latest">
+            <section id="install">
+              <p>
+                <a class="btn btn-light btn-lg btn-block ibm-type-mono text-dark" id="notification-button" onclick="askNotificationPermission()">Turn On Notifications</a>
+              </p>
+            </section>
             {% for flash in flashes %}
-            <article class="card mb-3 bg-dark">
+            <article class="librecard mb-3">
               <div class="card-body">
-                <h5 class="card-title"><a href="{{flash['link']}}">{{flash['text']}}</a></h5>
+                <h5 class="card-title">
+                  <a href="{{flash['link']}}">{{flash['text']}}</a></h5>
                 <p class="card-text">
-                  <time>{{flash['time']}}</time> &mdash;
+                  <time>
+                    <small><i class="fa fa-circle text-danger Blink">&nbsp;&nbsp;</i></small>
+                    {{flash['time']}}
+                  </time> &mdash;
                   <source>{{flash['source']}}</source>
                 </p>
               </div>
             </article>
-            <object class="vertdots"></object>
-            {% end %}
+            <object class="vertdots"></object> {% end %}
             <!-- view more on Twitter? -->
           </div>
         </div>
