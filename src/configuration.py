@@ -6,7 +6,6 @@ from userio import ok, say, warn
 
 twitter_credentials = None
 
-
 # Get the twitter login credentials in the form of a dict
 def get_twitter_credentials():
     global twitter_credentials
@@ -29,6 +28,10 @@ def get_accounts():
             accounts = json_data["accounts"]
     return accounts
 
+def get_vapid_public_private_key_pair():
+    with open("config.json") as config:
+        json_data = json.load(config)
+        return (json_data["vapid"]["public_key"], json_data["vapid"]["private_key"])
 
 def is_following(username):
     for account in get_accounts():
@@ -47,11 +50,14 @@ default_config = {
     "accounts": [
         ["@BBCBreaking", "BBC", "Breaking News"],
         ["@LibreNewsApp", "LibreNews", "Announcements"]
-    ]
+    ],
+    "vapid": {
+        "private_key": "XXXXX",
+        "public_key": "XXXXX",
+    }
 }
 
 names = None
-
 
 def get_name(handle):
     global names

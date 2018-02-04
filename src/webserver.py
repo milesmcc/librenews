@@ -10,6 +10,7 @@ import arrow
 import configuration
 import flashes
 import stats
+import push
 from userio import error, ok, say
 
 
@@ -100,12 +101,53 @@ class ErrorHandler(tornado.web.RequestHandler):
             error("Errored while handling request IP -- still served...")
         self.render("pages/error.html", message="Page not found", error="404")
 
+class ServiceWorkerHandler(tornado.web.RequestHandler):
+    def get(self):
+        service_worker = """
+self.addEventListener('push', function(event) {
+  if (event.data) {
+    fl = event.data.json()
+    console.log('This push event has data: ', event.data.text());
+    self.registration.showNotification(fl["channel"] + " via " + fl["source"], {
+        body: fl["text"],
+        timestamp: Date.parse(fl["time"]),
+        notification.onclick = function(event) {
+          event.preventDefault();
+          window.open(fl["link"], '_blank');
+        }
+      });
+  } else {
+    console.log('This push event has no data.');
+  }
+});
+        """
+        self.write(service_worker)
+        self.set_header("Content-Type", "application/javascript")
+        self.finish()
+
+class PushHandler(tornado.web.RequestHandler):
+    def post(self):
+        self.set_header("Content-Type", "application/json")
+        if push.register_new_receiver(tornado.escape.json_decode(self.request.body)):
+            self.write(json.dumps({"response": "OK"}))
+        else:
+            self.write(json.dumps({"response": "REJECTED"}))
+            self.status_code(400, reason="invalid subscription data")
+        self.finish()
+
+class BaseJavascriptHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.set_header("Content-Type", "application/javascript")
+        self.render("pages/base.js", applicationServerKey=push.get_application_server_key())
 
 application = tornado.web.Application([
     (r"/", IndexHandler),
     (r"/api", ApiHandler),
     (r"/stats", StatsHandler),
-    (r'/static/(.*)$', tornado.web.StaticFileHandler, {'path': "pages/static"})
+    (r"/push", PushHandler),
+    (r"/base\.js", BaseJavascriptHandler),
+    (r'/service-worker\.js', ServiceWorkerHandler),
+    (r'/static/(.*)$', tornado.web.StaticFileHandler, {'path': "pages/static"}),
     ], default_handler_class=ErrorHandler)
 if __name__ == "__main__":
     flashes.go()
