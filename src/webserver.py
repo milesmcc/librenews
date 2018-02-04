@@ -36,16 +36,14 @@ class IndexHandler(tornado.web.RequestHandler):
         except:
             error("Errored while handling request IP -- still served...")
         say("Received INDEX request (" + req_resp + ")")
-        flash = flashes.get_latest_flashes(1)[0]
-        flash['text'] = tornado.escape.xhtml_unescape(flash['text'])
-        time = str(flash['time'])
-
-        if isinstance(flash['time'], basestring):
-            time = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
-        elif isinstance(flash['time'], datetime.datetime):
-            time = arrow.get(flash['time']).humanize()
-        self.render("pages/index.html", flash=flash, time=time)
-
+        alerts = flashes.get_latest_flashes(3)
+        for flash in alerts:
+            flash['text'] = tornado.escape.xhtml_unescape(flash['text'])
+            if isinstance(flash['time'], basestring) and "+0000" in flash['time']:
+                flash['time'] = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
+            if isinstance(flash['time'], datetime.datetime):
+                flash['time'] = arrow.get(flash['time']).humanize()
+        self.render("pages/index.html", flashes=alerts)
 
 class StatsHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):

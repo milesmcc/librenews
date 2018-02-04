@@ -13,85 +13,80 @@
 
   <title>LibreNews — free, customizable, and decentralized breaking news notifications</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="static/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-
-  <!-- Custom styles for this template -->
-  <link href="static/cover.css" rel="stylesheet">
-
-  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <script src="static/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/IBM-type/0.5.4/css/ibm-type.min.css" integrity="sha256-+7qPhGkntGOXiUiiViw6XT06nsSRxZsXoOaT0imVp50=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="static/modern.css" />
 </head>
 
-<body>
-
-  <div class="site-wrapper">
-
-    <div class="site-wrapper-inner">
-
-      <div class="cover-container">
-
-        <div class="masthead clearfix">
-          <div class="inner">
-            <h3 class="masthead-brand">LibreNews</h3>
-            <nav>
-              <ul class="nav masthead-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/api">API</a></li>
-                <li><a href="https://github.com/milesmcc/LibreNews-Server/blob/master/README.md">Documentation</a></li>
-                <li><a href="/stats">Stats</a></li>
+<body class="text-light">
+  <div class="container ibm-type-light" id="full-document">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-lg-6" id="global">
+            <section id="lede">
+              <h1 class="big text-primary">LibreNews</h1>
+              <ul class="ibm-type-mono">
+                <li>
+                  <a href="https://github.com/milesmcc/LibreNews-Server">Code</a>
+                </li>
+                <li>
+                  <a href="/api">API</a>
+                </li>
+                <li>
+                  <a href="https://github.com/milesmcc/LibreNews-Server/blob/master/README.md">Documentation</a>
+                </li>
               </ul>
-            </nav>
+            </section>
+            <object class="vertdots"></object>
+            <section id="about">
+              <p class="lead">LibreNews is a decentralized, open source, and secure breaking news notification system. It is available for all modern devices, and offers <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/README.md">native Android integration</a>.</p>
+            </section>
+            <object class="vertdots"></object>
+            <section id="install">
+              <p>
+                <a class="btn btn-outline-light btn-lg ibm-type-mono" id="notification-button">Turn On Notifications</a>
+              </p>
+            </section>
+            <object class="vertdots"></object>
+            <section id="info">
+              <p>
+                LibreNews doesn't <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/STOPTRACKING.md">track</a> you, but we have a <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/PRIVACY.md">privacy policy</a> regardless.
+                We are proud to be <a href="https://openpd.org">OPD:I (PT, AL)</a> compliant. LibreNews is fully <a href="https://github.com/milesmcc/LibreNews-Server">open source</a>. Created by <a href="https://rmrm.io">Miles McCain</a>.
+              </p>
+            </section>
+          </div>
+          <div class="col-lg-6" id="latest">
+            {% for flash in flashes %}
+            <article class="card mb-3 bg-dark">
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{flash['link']}}">{{flash['text']}}</a></h5>
+                <p class="card-text">
+                  <time>{{flash['time']}}</time> &mdash;
+                  <source>{{flash['source']}}</source>
+                </p>
+              </div>
+            </article>
+            <object class="vertdots"></object>
+            {% end %}
+            <!-- view more on Twitter? -->
           </div>
         </div>
-
-        <div class="inner cover">
-          <h1 class="cover-heading">LibreNews</h1>
-          <p class="lead">A free, open source, speedy, and deeply customizable breaking news notification system.</p>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-default" disabled>iOS</a> <a href="https://play.google.com/store/apps/details?id=app.librenews.io.librenews" class="btn btn-lg btn-default">Android</a>
-          </p>
-          <br><br>
-          <div class="flash">
-            <a href="{{flash['link']}}">
-              <p class="lead" style="font-family: monospace;"><small><i class="fa fa-circle text-danger Blink">&nbsp;&nbsp;</i>{{time}}</small></p>
-              <p class="lead"><strong>{{flash['text']}}</strong></p>
-              <p class="lead" style="font-family: monospace;"><small><i>via {{flash['source']}}</i></small></p>
-            </a>
-          </div>
-        </div>
-
-        <div class="mastfoot">
-          <div class="inner">
-            <p>LibreNews is <a href="https://github.com/milesmcc/LibreNews-Server">open source</a>. Made by <a href="https://rmrm.io">Miles McCain</a>.</p>
-            <p>We're proud not to <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/STOPTRACKING.md">track</a> you, but we have a <a href="https://github.com/milesmcc/LibreNews-Android/blob/master/PRIVACY.md">privacy policy</a> regardless.</p>
-          </div>
-        </div>
-
       </div>
-
     </div>
-
   </div>
-
-  <!-- Bootstrap core JavaScript -->
-  <!-- <script src="static/bootstrap.min.js"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script> -->
-
-
 </body>
 
 </html>
