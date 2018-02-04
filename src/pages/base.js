@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 } else {
-  $("#notification-button").text("Incompatible Browser");
+  $("#notification-button").html("Incompatible Browser <span class='d-none d-lg-block'>(Try Firefox or Chrome)</span>");
   $("#notification-button").prop("disabled", true);
 }
 

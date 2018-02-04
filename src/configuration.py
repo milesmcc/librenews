@@ -63,8 +63,7 @@ default_config = {
     "vapid": {
         "private_key": "XXXXX",
         "public_key": "XXXXX",
-    },
-    # "gcm_key": "XXXXX"
+    }
 }
 
 names = None
