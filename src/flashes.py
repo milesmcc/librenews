@@ -10,6 +10,7 @@ import tweepy
 import twitter
 from userio import error, ok, say
 import push
+import copy
 
 
 # Called when it is time to load the data at start time.
@@ -24,7 +25,7 @@ def get_latest_flashes(num):
     global latest_flashes, is_sorted
     if not is_sorted:
         sort_flashes()
-    return latest_flashes[:num]
+    return copy.deepcopy(latest_flashes[:num])
 
 
 """
