@@ -18,7 +18,7 @@ LibreNews uses a few terms that you may be unfamiliar with in its API and UI.
 
 ### 1.1 Screenshots
 
-![The web interface of LibreNews](images/web_interface.png) _(The web interface of LibreNews)_
+![The web interface of LibreNews](images/new_web_interface.png) _(The web interface of LibreNews)_
 
 ![LibreNews Starting](images/cli.png) _(LibreNews starting up!)_
 
@@ -87,8 +87,12 @@ To start a LibreNews server, first make sure that you have `Python 2` and `pip` 
 - `tornado`
 - `tweepy`
 - `python-geoip`
+- `pymongo`
+- `pywebpush`
 
 (These dependencies are also listed in `requirements.txt`, so they can all be installed at once once the repository is cloned to your local machine with `pip install -r requirements.txt`.)
+
+Also install a MongoDB server, so that LibreNews can store `push` subscriptions. On Ubuntu machines, this can be accomplished with `sudo apt install mongodb`.
 
 Once you have all of these installed, you can download LibreNews if you haven't already. This is done by navigating into the parent directory where you would like to place the root LibreNews folder and running `git clone https://github.com/milesmcc/LibreNews-Server.git`. A new folder, `LibreNews-Server`, will be created.
 
@@ -101,29 +105,25 @@ LibreNews will then detect that it has not been set up, and will generate a conf
 The newly generated config will look something like this:
 
 ```
-{
-    "accounts": [
-        [
-            "@BBCBreaking",
-            "BBC",
-            "Breaking News"
-        ],
-        [
-            "@LibreNewsApp",
-            "LibreNews",
-            "Announcements"
-        ]
-    ],
-    "twitter": {
-        "access_token": "XXXXX",
-        "access_token_secret": "XXXXX",
-        "consumer_key": "XXXXX",
-        "consumer_secret": "XXXXX"
-    }
+"twitter": {
+    "consumer_key": "XXXXX",
+    "consumer_secret": "XXXXX",
+    "access_token": "XXXXX",
+    "access_token_secret": "XXXXX"
+},
+"accounts": [
+    ["@BBCBreaking", "BBC", "Breaking News"],
+    ["@LibreNewsApp", "LibreNews", "Announcements"]
+],
+"vapid": {
+    "private_key": "XXXXX",
+    "public_key": "XXXXX",
 }
 ```
 
 Get your credentials from Twitter at <https://apps.twitter.com>. Configure the accounts that you would like LibreNews-Server to monitor. The first field is the account's Twitter handle, the second field is its human readable source name, and the third field is for the channel the account belongs to.
+
+Then, create a VAPID key pair using any tool, either online or local. Remember to keep these keys private and properly inserted in the config.
 
 Once you correctly input your Twitter credentials, run `webserver.py` once more (in the exact same way) and watch as the server magically comes online at port `8888`. If you navigate to `http://localhost:8888` in your browser, you should find the beautiful LibreNews home page! This LibreNews server implementation has no database.
 
