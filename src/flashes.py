@@ -67,7 +67,7 @@ def push_flash(flash):
 
 def sort_flashes():
     global latest_flashes
-    latest_flashes = sorted(latest_flashes, key=lambda k: k["id"], reverse=True)
+    latest_flashes = sorted(latest_flashes, key=lambda k: int(k["id"]), reverse=True)
     global is_sorted
     is_sorted = True
 
