@@ -18,7 +18,7 @@ LibreNews uses a few terms that you may be unfamiliar with in its API and UI.
 
 ### 1.1 Screenshots
 
-![The web interface of LibreNews](images/new_web_interface.png) _(The web interface of LibreNews)_
+![The web interface of LibreNews](images/new_web_interface.jpg) _(The web interface of LibreNews)_
 
 ![LibreNews Starting](images/cli.png) _(LibreNews starting up!)_
 
