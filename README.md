@@ -28,6 +28,11 @@ There are few reasons that an end-user would need to interact with the server th
 
 For detailed instructions on how to use your LibreNews client, please refer to its own documentation.
 
+### 1.3 Server list
+Currently, the following LibreNews servers are available:
+
+* https://librenews.io/api
+
 ## 2\. Developer documentation
 
 Want to make your own LibreNews client? You've come to the right place.
