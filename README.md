@@ -32,6 +32,7 @@ For detailed instructions on how to use your LibreNews client, please refer to i
 Currently, the following LibreNews servers are available:
 
 * https://librenews.io/api
+* https://cloud.nonbinary.me/librenews/api - pulls updates from Al Jazeera and swedish SR Ekot
 
 ## 2\. Developer documentation
 
