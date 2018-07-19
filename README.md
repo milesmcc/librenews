@@ -31,8 +31,8 @@ For detailed instructions on how to use your LibreNews client, please refer to i
 ### 1.3 Server list
 Currently, the following LibreNews servers are available:
 
-* https://librenews.io/api
-* https://cloud.nonbinary.me/librenews/api - World and swedish news
+* https://librenews.io/api - BBC
+* https://cloud.nonbinary.me/librenews/api - World and Swedish news
 
 ## 2\. Developer documentation
 
