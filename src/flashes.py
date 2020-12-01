@@ -125,7 +125,7 @@ class AccountListener(tweepy.StreamListener):
 def streamer_entrypoint():
     twitter_stream = tweepy.Stream(twitter.auth, AccountListener())
     twitter_stream.filter(follow=[str(twitter.get_id(k[0])) for k in configuration.get_accounts()],
-                          async=False)
+                          is_async=False)
 
 
 def start_streamer():
