@@ -48,7 +48,9 @@ def generate_flash(text, link, source, identifier, time, channel):
         time = time.strftime("%a %b %d %H:%M:%S +0000 %Y")
     return {
         "text": text,  # allows unicode
-        "link": str(link),  # does not allow unicode
+        "text": "Link" if text == "" else text,
+        "link": "#" if link is None else str(link),
+        #"link": str(link),  # does not allow unicode
         "source": str(source),  # does not allow unicode
         "channel": str(channel),  # does not allow unicode
         "id": str(identifier),  # does not allow unicode
