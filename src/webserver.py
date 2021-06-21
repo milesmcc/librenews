@@ -1,5 +1,5 @@
 import datetime
-import httplib
+import http.client
 import json
 
 import tornado
@@ -29,7 +29,7 @@ def get_ip(request):
 
 class IndexHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
@@ -50,7 +50,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class StatsHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
@@ -65,7 +65,7 @@ class StatsHandler(tornado.web.RequestHandler):
 
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
@@ -94,7 +94,7 @@ class ErrorHandler(tornado.web.RequestHandler):
             stats.request(str(get_ip(self.request)))
         except:
             error("Errored while handling request IP -- still served...")
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
