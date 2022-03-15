@@ -1,5 +1,5 @@
 import datetime
-import httplib
+import http.client
 import json
 
 import tornado
@@ -29,7 +29,7 @@ def get_ip(request):
 
 class IndexHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
@@ -40,7 +40,7 @@ class IndexHandler(tornado.web.RequestHandler):
         alerts = flashes.get_latest_flashes(3)
         for flash in alerts:
             flash['text'] = tornado.escape.xhtml_unescape(flash['text'])
-            if isinstance(flash['time'], basestring) and "+0000" in flash['time']:
+            if isinstance(flash['time'], str) and "+0000" in flash['time']:
                 flash['time'] = arrow.Arrow.strptime(flash['time'], "%a %b %d %H:%M:%S +0000 %Y").humanize()
             if isinstance(flash['time'], datetime.datetime):
                 flash['time'] = arrow.get(flash['time']).humanize()
@@ -50,7 +50,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class StatsHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
@@ -65,7 +65,7 @@ class StatsHandler(tornado.web.RequestHandler):
 
 class ApiHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:
@@ -85,7 +85,7 @@ class ApiHandler(tornado.web.RequestHandler):
             "latest": [flash for flash in flashes.get_latest_flashes(25)
                        if int(flash['id']) > int(latest)]
         }
-        self.write(unicode(json.dumps(data, sort_keys=True, separators=(',', ':'))))
+        self.write(str(json.dumps(data, sort_keys=True, separators=(',', ':'))))
 
 
 class ErrorHandler(tornado.web.RequestHandler):
@@ -94,7 +94,7 @@ class ErrorHandler(tornado.web.RequestHandler):
             stats.request(str(get_ip(self.request)))
         except:
             error("Errored while handling request IP -- still served...")
-        self.render("pages/error.html", message=httplib.responses[status_code], error=status_code)
+        self.render("pages/error.html", message=http.client.responses[status_code], error=status_code)
 
     def get(self):
         try:

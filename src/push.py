@@ -1,6 +1,6 @@
 from pywebpush import webpush, WebPushException
 import configuration
-import thread
+import _thread
 from pymongo import MongoClient
 import userio
 import json
